@@ -1,9 +1,11 @@
 from __future__ import print_function
 from imutils.video.pivideostream import PiVideoStream
+from imutils.object_detection import non_max_suppression
 import imutils
 import time
 import numpy as np
 import cv2
+import sys
 
 class FaceDetector(object):
     def __init__(self, flip = True):
@@ -12,6 +14,10 @@ class FaceDetector(object):
         time.sleep(2.0)
 
         # opencvの顔分類器(CascadeClassifier)をインスタンス化する
+        self.argvs = sys.argv
+        self.face_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/haarcascade_frontalface_default.xml')
+        if len(self.argvs) >= 2 and "eyes" in self.argvs:
+　　          self.eye_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/haarcascade_eye.xml')
 
     def __del__(self):
         self.vs.stop()
